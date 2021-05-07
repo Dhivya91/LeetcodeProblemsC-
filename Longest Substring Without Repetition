@@ -1,0 +1,84 @@
+Given a string s, find the length of the longest substring without repeating characters.
+
+Example 1:
+
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+Example 2:
+
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+
+***********************SOLUTION************************
+
+//Approach 1:
+/*public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        var Substring = new StringBuilder();
+        int result = 0;
+        foreach(char c in s){
+            if(s.Contains(c))
+            {
+                result = Math.max(Substring.Length,result);
+                while(Substring.ToString().Contains(c)){
+                    Substring.Remove(0,1);
+                }
+            }
+            Substring.Append(c);
+        }
+        return result;
+    }
+}*/
+
+//Approach 2: two pointer- sliding window
+/*
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        int[] chars = new int[128];
+        
+        int left = 0, right =0;
+        int result = 0;
+        while(right < s.Length){
+             var r = s[right];
+             var index = chars[r];
+             if(index != null && index >= left)
+                left = index + 1;
+            
+            result = Math.Max(result, right-left+1);
+            
+             chars[r] = right;
+             right++;
+        }
+       
+        return result;
+    }
+}
+*/
+//Approach 3: Hash Table - Sliding window Optimized
+
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        Hashtable ht = new Hashtable();
+        
+        int left = 0, right =0;
+        int result = 0;
+        while(right < s.Length){
+             var r = s[right];
+             if(ht.ContainsKey(r)){
+                 left = Math.Max(left,Convert.ToInt16(ht[r]) + 1);
+                 ht[r] = right;
+             }
+              else{
+                  ht.Add(r,right);
+              } 
+            
+            result = Math.Max(result, right-left+1);
+            right++;
+        }
+       
+        return result;
+    }
+}
+
