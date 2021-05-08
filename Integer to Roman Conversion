@@ -1,0 +1,36 @@
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two one's added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
+
+***********************************SOLUTION*********************************************
+
+public class Solution {
+    public string IntToRoman(int num) {
+      //Edge Cases
+        if(num < 1 || num > 3999) return "";
+        
+        int[] Values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+     string[] Symbols = {"M", "CM", "D","CD","C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        
+        StringBuilder result = new StringBuilder();
+        
+        for(int i = 0; i < Values.Count() && num > 0; i++){
+            //while same value still fits into the number, repeat it
+            while(Values[i] <= num){
+                num -= Values[i];
+                result.Append(Symbols[i]);   
+            }
+        }
+        
+        return result.ToString();
+        
+    }
+}
